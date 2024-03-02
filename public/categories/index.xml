@@ -1,0 +1,31 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Categories - Category - Yul0ck</title>
+        <link>http://localhost:1313/categories/</link>
+        <description>Categories - Category - Yul0ck</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 02 Mar 2024 17:16:01 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/categories/" rel="self" type="application/rss+xml" /><item>
+    <title>1</title>
+    <link>http://localhost:1313/categories/1/</link>
+    <pubDate>Sat, 02 Mar 2024 17:16:01 &#43;0800</pubDate>
+    <author>Yul0ck</author>
+    <guid>http://localhost:1313/categories/1/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>2</title>
+    <link>http://localhost:1313/categories/2/</link>
+    <pubDate>Sat, 02 Mar 2024 17:16:01 &#43;0800</pubDate>
+    <author>Yul0ck</author>
+    <guid>http://localhost:1313/categories/2/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>3</title>
+    <link>http://localhost:1313/categories/3/</link>
+    <pubDate>Sat, 02 Mar 2024 17:16:01 &#43;0800</pubDate>
+    <author>Yul0ck</author>
+    <guid>http://localhost:1313/categories/3/</guid>
+    <description><![CDATA[]]></description>
+</item>
+</channel>
+</rss>
