@@ -80,23 +80,15 @@ select * from admin where password='' or true
 注释中的源码如下
 
 ```php
- $password=$_POST['password'];
-
-    $sql = "SELECT * FROM admin WHERE username = 'admin' and password = '".md5($password,true)."'";
-
-    $result=mysqli_query($link,$sql);
-
-        if(mysqli_num_rows($result)>0){
-
-            echo 'flag is :'.$flag;
-
-        }
-
-        else{
-
-            echo '密码错误!';
-
-        }
+ $password=$_POST['password'];
+    $sql = "SELECT * FROM admin WHERE username = 'admin' and password = '".md5($password,true)."'";
+    $result=mysqli_query($link,$sql);
+        if(mysqli_num_rows($result)>0){
+            echo 'flag is :'.$flag;
+        }
+        else{
+            echo '密码错误!';
+        }
 ```
 
 简单介绍下`md5()`函数
