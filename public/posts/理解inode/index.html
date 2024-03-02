@@ -4,31 +4,31 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>记录 - Yul0ck</title><meta name="Description" content="This is my cool site"><meta property="og:title" content="记录" />
-<meta property="og:description" content="折腾了一整天总算把博客搭起来了，真的很不理解为什么网上教程清清楚楚地我却总是在各种地方出问题，不过好在已经结束了（当然图片的问题还没解决，不" />
+        <title>理解inode - Yul0ck</title><meta name="Description" content="This is my cool site"><meta property="og:title" content="理解inode" />
+<meta property="og:description" content="Inode是什么 要理解Inode，就得先讲Linux的文件存储 文件存储在硬盘上，硬盘上的最小存储单位叫&quot;扇区&quot;（Sect" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://localhost:1313/posts/%E8%AE%B0%E5%BD%95/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2024-03-02T17:24:34+08:00" />
-<meta property="article:modified_time" content="2024-03-02T17:24:34+08:00" /><meta property="og:site_name" content="My cool site" />
+<meta property="og:url" content="http://localhost:1313/posts/%E7%90%86%E8%A7%A3inode/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-03-02T18:16:24+08:00" />
+<meta property="article:modified_time" content="2024-03-02T18:16:24+08:00" /><meta property="og:site_name" content="My cool site" />
 
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="记录"/>
-<meta name="twitter:description" content="折腾了一整天总算把博客搭起来了，真的很不理解为什么网上教程清清楚楚地我却总是在各种地方出问题，不过好在已经结束了（当然图片的问题还没解决，不"/>
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="理解inode"/>
+<meta name="twitter:description" content="Inode是什么 要理解Inode，就得先讲Linux的文件存储 文件存储在硬盘上，硬盘上的最小存储单位叫&quot;扇区&quot;（Sect"/>
 <meta name="application-name" content="My cool site">
 <meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/posts/%E8%AE%B0%E5%BD%95/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/posts/%E7%90%86%E8%A7%A3inode/" /><link rel="prev" href="http://localhost:1313/posts/%E8%AE%B0%E5%BD%95/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "记录",
+        "headline": "理解inode",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "http:\/\/localhost:1313\/posts\/%E8%AE%B0%E5%BD%95\/"
-        },"genre": "posts","keywords": "闲话","wordcount":  643 ,
-        "url": "http:\/\/localhost:1313\/posts\/%E8%AE%B0%E5%BD%95\/","datePublished": "2024-03-02T17:24:34+08:00","dateModified": "2024-03-02T17:24:34+08:00","publisher": {
+            "@id": "http:\/\/localhost:1313\/posts\/%E7%90%86%E8%A7%A3inode\/"
+        },"genre": "posts","keywords": "linux相关","wordcount":  1490 ,
+        "url": "http:\/\/localhost:1313\/posts\/%E7%90%86%E8%A7%A3inode\/","datePublished": "2024-03-02T18:16:24+08:00","dateModified": "2024-03-02T18:16:24+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -99,26 +99,84 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">Contents</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">记录</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Yul0ck</a></span>&nbsp;<span class="post-category">included in <a href="/categories/%E7%94%9F%E6%B4%BB/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>生活</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-03-02">2024-03-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;643 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">理解inode</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Yul0ck</a></span>&nbsp;<span class="post-category">included in <a href="/categories/linux/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Linux</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-03-02">2024-03-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1490 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
                     <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
                 </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
-            </div><div class="content" id="content"><p>折腾了一整天总算把博客搭起来了，真的很不理解为什么网上教程清清楚楚地我却总是在各种地方出问题，不过好在已经结束了（当然图片的问题还没解决，不过我已经累了，歇会）。</p>
-<p>室友们还在外面疯，趁着这难得的清闲时间，先把第一篇文章写了。</p>
-<p>之前也搭过几个博客，但从没有一个能让我如此狼狈，这一天下来前前后后已经push了至少三十多次仓库，换了五个主题，但一切都是有回报的，此番折腾让我对git有了更加清晰的认知，而我也终于能有个地方好好写点东西了。</p>
-<p>至于为什么要重新搭建博客，我想大抵是之前那个没怎么花心思去了解，急急忙忙地从网上随便找了个教程，一顿乱七八糟的操作，竟也给当时的我搭建成功了，当然，那些旧博客也是千疮百孔。我想，这正是因为那时的我不过是在追着师傅们的步伐，进行着一次又一次拙劣的模仿罢了，当然并不是说那段时光的努力毫无意义，只不过相比当下，那时的我缺少了名为“自我”的事物，不会去自己发掘新东西是走不远的，但好在如今的我认识到了这一点，也有了重新开始搭建博客的理由与动力——我要写点自己的东西出来。</p>
-<p>之后我应该会写一些RCE与php弱比较的总结，当然是经由这段时间以来我所积累的知识孕育而出，而不是从网上他人的博客中抄一点下来的、毫无意义的产物。</p>
-<p>当然这也意味着，我的路要开始往前延伸了，我很庆幸自己能够清醒过来。</p>
-<p>这座博客会记录我在接下来三年内我的知识与经验，我的喜怒与哀乐，我的学习与成长，我想为将来的我留下这样一份记录，仅此而已。</p>
-<p>很喜欢一句话，忘记是从哪位师傅那里听来的了</p>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#inode是什么">Inode是什么</a></li>
+    <li><a href="#inode的内容">Inode的内容</a></li>
+    <li><a href="#inode号码">Inode号码</a></li>
+    <li><a href="#inode的大小">Inode的大小</a></li>
+    <li><a href="#硬链接">硬链接</a></li>
+    <li><a href="#软链接">软链接</a></li>
+    <li><a href="#inode特殊作用">Inode特殊作用</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="inode是什么">Inode是什么</h2>
+<p>要理解Inode，就得先讲Linux的文件存储</p>
+<p>文件存储在硬盘上，硬盘上的最小存储单位叫&quot;扇区&quot;（Sector），每个扇区存储约0.5KB</p>
+<p>操作系统读取硬盘时都是一次性读取多个扇区，即一个&quot;块&quot;（Block）</p>
+<p>连续八个Sector组成一个Block，这是文件存取的最小单位，通常为4KB</p>
+<p>文件的数据都储存在Block中，因此还需要一个地方用来储存文件的元信息（如文件的作者、文件的创建日期、文件的大小等），这种区域就是Inode（索引节点）</p>
 <blockquote>
-<p>博客是写给自己看的</p>
+<p>每一个文件都有对应的Inode，里面包含了与文件有关的信息</p>
+</blockquote>
+<h2 id="inode的内容">Inode的内容</h2>
+<p>Inode包含的文件的元信息具体有以下内容</p>
+<ul>
+<li>文件的字节数</li>
+<li>文件所有者的User ID</li>
+<li>文件的Group ID</li>
+<li>文件的读、写、执行权限</li>
+<li>文件的时间戳（有三个：ctime指inode上一次变动时间，mtime指文件内容上一次变更时间，atime指文件上一次打开时间）</li>
+<li>链接数：指有多少个文件名指向这个inode</li>
+<li>文件数据的位置（即对应的Block的位置）</li>
+</ul>
+<p>用<code>stat</code>命令来查看某个文件的Inode信息</p>
+<pre tabindex="0"><code>stat example.txt
+</code></pre><blockquote>
+<p>除了文件名以外的所有信息都会存储在inode中</p>
+</blockquote>
+<h2 id="inode号码">Inode号码</h2>
+<p>每个inode都有一个号码，操作系统用inode号码来识别不同的文件</p>
+<p>这里重复一遍，Unix/Linux系统内部不用文件名，而使用Inode号码来识别文件</p>
+<p>系统内部打开某个文件的过程：首先找到这个文件名对应的inode号码；通过inode号码获取inode信息；根据inode信息找到文件数据所在的Block，读出数据</p>
+<p><code>ls -i</code>命令用以读取文件名对应的inode号码</p>
+<pre tabindex="0"><code>ls -i example.txt
+</code></pre><h2 id="inode的大小">Inode的大小</h2>
+<p>inode也会消耗磁盘空间</p>
+<p><code>df -i</code>命令可以查看各个分区的inode总数和已使用的数量</p>
+<p>由于每个文件都需要一个inode，所以可能出现inode已用完，但硬盘还未满的情况，这时将无法创建文件</p>
+<h2 id="硬链接">硬链接</h2>
+<p>正常情况下，inode号码与文件名是一一对应的，但在Unix/Linux系统中允许多个文件名指向同一个inode号码</p>
+<blockquote>
+<p>这意味着，可以用不同的文件名访问同样的内容；对文件内容进行修改，会影响到所有文件名；但是，删除一个文件名，不影响另一个文件名的访问</p>
+</blockquote>
+<p>这种情况就被称作<strong>硬链接</strong>（hard link）</p>
+<p><code>ln</code>命令来创建硬链接</p>
+<pre tabindex="0"><code>ln &lt;源文件&gt; &lt;目标文件&gt;
+</code></pre><p>运行此条命令后，源文件的与目标文件的inode号码会相同，这时该inode信息中的链接数会加一
+当链接数为0时，系统会回收这个inode号码与对应的Block</p>
+<h2 id="软链接">软链接</h2>
+<p>与硬链接不同（<del>废话</del>），文件A与文件B的inode号码不同，但文件A的内容是文件B的路径，读取A时，会打开B，这时，文件A就被称为文件B的<strong>软链接</strong>（soft link）或<strong>符号链接</strong>（symbolic link）</p>
+<p>软链接与硬链接最大的不同在于，文件A指向的是B的文件名而不是inode号码，因此B的inode链接数不会发生变化</p>
+<p><code>ln -s</code>创建软链接</p>
+<pre tabindex="0"><code>ls -s &lt;源文件或目录&gt; &lt;目标文件或目录&gt;
+</code></pre><h2 id="inode特殊作用">Inode特殊作用</h2>
+<ol>
+<li>文件名包含特殊字符无法删除时，删除inode节点就可直接删除文件</li>
+<li>移动文件或重命名文件，只修改文件名而不是inode号码</li>
+<li>打开一个文件后，系统就以inode号码来识别文件，不再考虑文件名</li>
+</ol>
+<blockquote>
+<p>第3点使得软件更新变得简单，可以在不关闭软件的情况下进行更新，不需要重启。因为系统通过inode号码，识别运行中的文件，不通过文件名。更新的时候，新版文件以同样的文件名，生成一个新的inode，不会影响到运行中的文件。等到下一次运行这个软件的时候，文件名就自动指向新版文件，旧版文件的inode则被回收。</p>
 </blockquote>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
@@ -129,19 +187,19 @@
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://localhost:1313/posts/%E8%AE%B0%E5%BD%95/" data-title="记录" data-hashtags="闲话"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://localhost:1313/posts/%E8%AE%B0%E5%BD%95/" data-hashtag="闲话"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://localhost:1313/posts/%E8%AE%B0%E5%BD%95/" data-title="记录"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://localhost:1313/posts/%E8%AE%B0%E5%BD%95/" data-title="记录"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://localhost:1313/posts/%E8%AE%B0%E5%BD%95/" data-title="记录"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://localhost:1313/posts/%E7%90%86%E8%A7%A3inode/" data-title="理解inode" data-hashtags="linux相关"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://localhost:1313/posts/%E7%90%86%E8%A7%A3inode/" data-hashtag="linux相关"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://localhost:1313/posts/%E7%90%86%E8%A7%A3inode/" data-title="理解inode"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://localhost:1313/posts/%E7%90%86%E8%A7%A3inode/" data-title="理解inode"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://localhost:1313/posts/%E7%90%86%E8%A7%A3inode/" data-title="理解inode"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E9%97%B2%E8%AF%9D/">闲话</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/linux%E7%9B%B8%E5%85%B3/">Linux相关</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
         </section>
     </div>
 
-    <div class="post-nav"></div>
+    <div class="post-nav"><a href="/posts/%E8%AE%B0%E5%BD%95/" class="prev" rel="prev" title="记录"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>记录</a></div>
 </div>
 </article></div>
             </main><footer class="footer">
