@@ -91,19 +91,7 @@ select * from admin where password='' or true
         }
 ```
 
-简单介绍下`md5()`函数
 
-```
-md5(string,raw)
-```
-
-|参数|描述|
-
-|:--:|:--:|
-
-|string|必需，规定要计算的字符串|
-
-|raw|可选，规定十六进制或二进制输出格式。默认False，32字符十六进制|
 
 提交ffifdyop，使查询语句变成
 
