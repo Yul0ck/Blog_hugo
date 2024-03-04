@@ -4,19 +4,19 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>MD5绕过总结 - Yul0ck</title><meta name="Description" content="This is my cool site"><meta property="og:title" content="MD5绕过总结" />
-<meta property="og:description" content="常规0e绕过 QNKCDZO 240610708 s878926199a s155964671a s214587387a s214587387a 这些字符串的md5值都是0e开头，e代表科学计数法，这些值在php弱类型比较中==判断为相等 数组绕过 一个数组无法进行" />
+        <title>MD5绕过总结 - Yul0ck</title><meta name="Description" content="不难，但常见"><meta property="og:title" content="MD5绕过总结" />
+<meta property="og:description" content="不难，但常见" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://localhost:1313/posts/md5%E7%BB%95%E8%BF%87%E6%80%BB%E7%BB%93/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2024-03-02T18:43:43+08:00" />
 <meta property="article:modified_time" content="2024-03-02T18:43:43+08:00" /><meta property="og:site_name" content="My cool site" />
 
 <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="MD5绕过总结"/>
-<meta name="twitter:description" content="常规0e绕过 QNKCDZO 240610708 s878926199a s155964671a s214587387a s214587387a 这些字符串的md5值都是0e开头，e代表科学计数法，这些值在php弱类型比较中==判断为相等 数组绕过 一个数组无法进行"/>
+<meta name="twitter:description" content="不难，但常见"/>
 <meta name="application-name" content="My cool site">
 <meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/posts/md5%E7%BB%95%E8%BF%87%E6%80%BB%E7%BB%93/" /><link rel="prev" href="http://localhost:1313/posts/%E8%AE%B0%E5%BD%95/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/posts/md5%E7%BB%95%E8%BF%87%E6%80%BB%E7%BB%93/" /><link rel="prev" href="http://localhost:1313/posts/%E8%AE%B0%E5%BD%95/" /><link rel="next" href="http://localhost:1313/posts/%E5%85%B3%E4%BA%8Erce%E7%BB%95%E8%BF%87%E7%9A%84%E5%90%84%E7%A7%8D%E5%A7%BF%E5%8A%BF/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
@@ -33,7 +33,7 @@
             "name": ""},"author": {
                 "@type": "Person",
                 "name": "Yul0ck"
-            },"description": ""
+            },"description": "不难，但常见"
     }
     </script></head>
     <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
@@ -151,10 +151,11 @@
 <p>如题</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span><span class="p">((</span><span class="nx">string</span><span class="p">)</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">!==</span> <span class="p">(</span><span class="nx">string</span><span class="p">)</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="nx">md5</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">])</span> <span class="o">===</span> <span class="nx">md5</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]))</span>
 </span></span></code></pre></div><p>用一些md5值相等的字符串</p>
-<pre tabindex="0"><code>M%C9h%FF%0E%E3%5C%20%95r%D4w%7Br%15%87%D3o%A7%B2%1B%DCV%B7J%3D%C0x%3E%7B%95%18%AF%BF%A2%00%A8%28K%F3n%8EKU%B3_Bu%93%D8Igm%A0%D1U%5D%83%60%FB_%07%FE%A2
-
-M%C9h%FF%0E%E3%5C%20%95r%D4w%7Br%15%87%D3o%A7%B2%1B%DCV%B7J%3D%C0x%3E%7B%95%18%AF%BF%A2%02%A8%28K%F3n%8EKU%B3_Bu%93%D8Igm%A0%D1%D5%5D%83%60%FB_%07%FE%A2
-</code></pre><h3 id="特殊字符串ffifdyop">特殊字符串ffifdyop</h3>
+<blockquote>
+<p>M%C9h%FF%0E%E3%5C%20%95r%D4w%7Br%15%87%D3o%A7%B2%1B%DCV%B7J%3D%C0x%3E%7B%95%18%AF%BF%A2%00%A8%28K%F3n%8EKU%B3_Bu%93%D8Igm%A0%D1U%5D%83%60%FB_%07%FE%A2</p>
+<p>M%C9h%FF%0E%E3%5C%20%95r%D4w%7Br%15%87%D3o%A7%B2%1B%DCV%B7J%3D%C0x%3E%7B%95%18%AF%BF%A2%02%A8%28K%F3n%8EKU%B3_Bu%93%D8Igm%A0%D1%D5%5D%83%60%FB_%07%FE%A2</p>
+</blockquote>
+<h3 id="特殊字符串ffifdyop">特殊字符串ffifdyop</h3>
 <p>该字符串经过md5加密后：276f722736c95d99e921722cf9ed621c  </p>
 <p>再转换为字符串即为：<code>'or'6&lt;乱码&gt;</code></p>
 <p>用途：</p>
@@ -216,7 +217,8 @@ M%C9h%FF%0E%E3%5C%20%95r%D4w%7Br%15%87%D3o%A7%B2%1B%DCV%B7J%3D%C0x%3E%7B%95%18%A
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/%E8%AE%B0%E5%BD%95/" class="prev" rel="prev" title="记录"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>记录</a></div>
+    <div class="post-nav"><a href="/posts/%E8%AE%B0%E5%BD%95/" class="prev" rel="prev" title="记录"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>记录</a>
+            <a href="/posts/%E5%85%B3%E4%BA%8Erce%E7%BB%95%E8%BF%87%E7%9A%84%E5%90%84%E7%A7%8D%E5%A7%BF%E5%8A%BF/" class="next" rel="next" title="关于RCE绕过的各种姿势">关于RCE绕过的各种姿势<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
 </article></div>
             </main><footer class="footer">
