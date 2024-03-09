@@ -65,6 +65,8 @@ if(';' === preg_replace('/[^\W]+\((?R)?\)/', '', $_GET['code'])) {
 
 - `array_shift()`：删除数组中的第一个元素并返回被删除的值
 
+- `implode()`：用于将数组转化为字符串，让`echo`或`printf`得以输出结果
+
 ### 目录操作
 
 - `getcwd()`：获取当前工作目录
@@ -97,11 +99,7 @@ if (';' === preg_replace('/[^\W]+\((?R)?\)/', '', $_GET['star'])) {
 
 这题用到了`getallheaders()函数`，用于获取当前所有的请求头信息，但只允许在Apache环境下使用，在php7以上的版本可以用`apache_request_headers()`代替
 
-
-
 本题思路是在请求头中添加我们要执行的系统命令，用`getallheaders()`获取所有的请求头信息，接着用`array_flip()`与`array_rand()`来调换与获取键值对，最后用`system()`来执行命令
-
-
 
 payload
 
@@ -114,8 +112,6 @@ flag: cat /f*
 ```
 
 > 由于`array_rand()`是随机获取的，因此可以删除部分请求头来提高成功率
-
-
 
 ### session_id()
 
@@ -162,19 +158,11 @@ exp
 
 ![](/img/无参数RCE/2024-03-07-18-50-31-image.png)
 
- 
-
 有三种解法，其一是利用`array_reverse()`与`next()`来对数组进行操作，再用`show_source()`之类的函数进行读取；其二是用`getallheaders()`；其三便是`session_id()`
-
-
 
 前面也讲到，倘若中间件不是Apache，`getallheaders()`便无法使用，这里介绍下`session_id()`的使用
 
-
-
 将恶意代码写到cookie的PHPSESSID中，再利用`session_id()`读取，之后便可以用其他函数来实现命令执行。但是`session_id()`需要开启session才能使用，因此在此之前还需要用`session_start()`来开启session服务
-
-
 
 payload
 
