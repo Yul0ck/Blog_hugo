@@ -133,7 +133,7 @@ paginate = 12
         # LoveIt 更改 | 0.2.7 主页显示的网站标题 (支持 HTML 格式)
         title = ""
         # 主页显示的网站副标题 (允许 HTML 格式)
-        subtitle = "Today or any day that phone may ring and bring good news."
+        subtitle = "一个人知道自己为什么而活，就可以忍受任何一种生活"
         # 是否为副标题显示打字机动画
         typeit = true
         # 是否显示社交账号

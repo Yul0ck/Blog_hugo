@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/localhost:1313\/posts\/%E6%97%A0%E5%8F%82%E6%95%B0rce\/"
-        },"genre": "posts","keywords": "RCE","wordcount":  1599 ,
+        },"genre": "posts","keywords": "RCE","wordcount":  1682 ,
         "url": "http:\/\/localhost:1313\/posts\/%E6%97%A0%E5%8F%82%E6%95%B0rce\/","datePublished": "2024-03-07T18:13:51+08:00","dateModified": "2024-03-07T18:13:51+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -101,7 +101,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">无参数RCE</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Yul0ck</a></span>&nbsp;<span class="post-category">included in <a href="/categories/bypass/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Bypass</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-03-07">2024-03-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1599 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-03-07">2024-03-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1682 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="">
                 <div class="details-summary toc-title">
@@ -154,7 +154,7 @@
 <p><code>eval()</code>、<code>assert()</code>、<code>system</code>：命令执行</p>
 </li>
 <li>
-<p><code>highlight_file()</code>、<code>show_source()</code>、<code>read_file()</code>：读取文件内容</p>
+<p><code>highlight_file()</code>、<code>show_source()</code>、<code>read_file()</code>、<code>readgzfile</code>：读取文件内容</p>
 </li>
 <li>
 <p><code>getenv()</code>：获取环境变量（php7.1版本以上）</p>
@@ -191,6 +191,12 @@
 </li>
 <li>
 <p><code>array_shift()</code>：删除数组中的第一个元素并返回被删除的值</p>
+</li>
+<li>
+<p><code>array_pop()</code>：删除数组中的最后一个元素并返回被删除的值</p>
+</li>
+<li>
+<p><code>implode()</code>：用于将数组转化为字符串，让<code>echo</code>或<code>printf</code>得以输出结果</p>
 </li>
 </ul>
 <h3 id="目录操作">目录操作</h3>

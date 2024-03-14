@@ -39,7 +39,7 @@ if(';' === preg_replace('/[^\W]+\((?R)?\)/', '', $_GET['code'])) {
 
 - `eval()`、`assert()`、`system`：命令执行
 
-- `highlight_file()`、`show_source()`、`read_file()`：读取文件内容
+- `highlight_file()`、`show_source()`、`read_file()`、`readgzfile`：读取文件内容
 
 - `getenv()`：获取环境变量（php7.1版本以上）
 
@@ -64,6 +64,8 @@ if(';' === preg_replace('/[^\W]+\((?R)?\)/', '', $_GET['code'])) {
 - `array_reverse()`：以相反的顺序返回数组内容
 
 - `array_shift()`：删除数组中的第一个元素并返回被删除的值
+
+- `array_pop()`：删除数组中的最后一个元素并返回被删除的值
 
 - `implode()`：用于将数组转化为字符串，让`echo`或`printf`得以输出结果
 
