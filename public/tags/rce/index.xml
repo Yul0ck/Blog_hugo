@@ -9,7 +9,7 @@
     <pubDate>Thu, 07 Mar 2024 18:13:51 &#43;0800</pubDate>
     <author>Yul0ck</author>
     <guid>http://localhost:1313/posts/%E6%97%A0%E5%8F%82%E6%95%B0rce/</guid>
-    <description><![CDATA[一个很有趣的RCE姿势 核心代码 if(&#39;;&#39; === preg_replace(&#39;/[^\W]+\((?R)?\)/&#39;, &#39;&#39;, $_GET[&#39;code&#39;])) { eval($_GET[&#39;code&#39;]); } 关键点在于('/[^\W]+((?R)?\这个正则表达式，改表达式替换后，每个函数内的参数都会]]></description>
+    <description><![CDATA[一个很有趣的RCE姿势 核心代码 if(&#39;;&#39; === preg_replace(&#39;/[^\W]+\((?R)?\)/&#39;, &#39;&#39;, $_GET[&#39;code&#39;])) { eval($_GET[&#39;code&#39;]); } 关键点在于('/[^\W]+((?R)?/这个正则表达式，在该表达式下，每个函数内的参数都会被]]></description>
 </item>
 <item>
     <title>简单的RCE</title>
